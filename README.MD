@@ -1,35 +1,69 @@
-# Simulação de Controle PID de Temperatura em C++
+# 🔥 Simulação de Controle PID de Temperatura em C++
 
-Este projeto implementa uma simulação de um sistema de controle PID para regular a temperatura de um forno virtual, usando a linguagem C++. O objetivo é demonstrar o comportamento de um sistema de controle em malha fechada com um modelo térmico simplificado.
+Este projeto implementa uma simulação em C++ de um sistema de controle PID para regular a temperatura de duas plantas térmicas virtuais:
+
+- **Forno** (`Oven`)
+- **Tanque térmico** (`Tank`)
+
+O objetivo é demonstrar o comportamento de um controle em malha fechada usando modelos térmicos simplificados e um controlador PID.
+
+---
 
 ## 📋 Descrição
 
-O sistema simula um forno cuja temperatura é controlada por um atuador (aquecedor) com potência de 0 a 100%. A cada passo da simulação:
+O sistema permite que o usuário escolha entre simular:
 
-- A temperatura atual é calculada com base na potência aplicada e na perda de calor natural.
-- Um controlador PID calcula o valor de potência necessário para atingir e manter a temperatura desejada (setpoint).
-- O usuário define dois parâmetros de entrada:
-  - Tempo de simulação (em minutos), de 1 a 60 minutos.
-  - Temperatura desejada (em °C), mínima de 26°C.
+1. 🔥 **Um forno aquecido por resistência**
+2. 💧 **Um tanque aquecido com entrada de calor**
 
-A simulação é executada em tempo real com passo de 0.1s e imprime a evolução da temperatura e da potência a cada iteração.
+Para ambas as simulações, o processo é semelhante:
 
-### melhorias futuras
+- O usuário fornece:
+  - O **tempo total de simulação** (em minutos) – entre 1 e 60.
+  - A **temperatura desejada (setpoint)** – acima de 25 °C.
+  - A planta desejada: **forno** ou **tanque**.
+- A simulação calcula, a cada 0.1s:
+  - A temperatura atual com base na dinâmica térmica e potência aplicada.
+  - A ação de controle PID (potência entre 0 e 100%) com base no erro.
+  - A impressão dos dados no terminal em tempo real.
 
-- Geração de gráficos (ex: via Python ou exportação para CSV)
-
-- Interface gráfica simples
-
-- Simulação de diferentes tipos de plantas (ex: motor, tanque)
+---
 
 ## ⚙️ Como compilar
 
-Requisitos:
+### Requisitos:
 - Compilador `g++` com suporte a C++11 ou superior.
+- Estrutura de diretórios:
+├── main.cpp
+├── Makefile
+├── temperatureOven/
+│ ├── temperatureOven.cpp
+│ └── temperatureOven.h
+└── temperatureTank/
+├── temperatureTank.cpp
+└── temperatureTank.h
 
-### Comando de compilação:
+### 🚀 Melhorias futuras
 
-```bash
-g++ -o pid_ov_
+Exportação de dados para CSV
 
+Gráficos em tempo real com Python/Matplotlib
+
+Interface gráfica (GUI)
+
+Suporte a múltiplos tipos de controladores (PI, ON/OFF)
+
+Configuração por arquivo externo (ex: JSON)
+
+### Compilação com `make` (recomendado):
+
+#### ou manualmente
+
+g++ -ItemperatureOven -ItemperatureTank \
+    main.cpp \
+    temperatureOven/temperatureOven.cpp \
+    temperatureTank/temperatureTank.cpp \
+    -o pidControl
+
+./pidControl
 
